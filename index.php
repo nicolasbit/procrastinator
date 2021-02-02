@@ -105,6 +105,15 @@ if (isset($_SESSION['lastid'])) {
         </div>
 
       </div>
+      <div class="row">
+        <div class="col-6 mt-5">
+          <div class="alert alert-warning alert-dismissible fade show alert-delete" role="alert">
+            <strong>Holy guacamole!</strong> Task done.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </body>
 </html>

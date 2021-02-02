@@ -138,7 +138,8 @@ var posting = $.post('add-todo.php',{
 
     deleting.done(function(){
       $('#'+id).remove();
-
+      $('.alert-delete').show();
+      setTimeout(function(){ $('.alert-delete').hide(); }, 3000);
     })
 
 
