@@ -24,6 +24,7 @@ if (isset($_SESSION['lastid'])) {
   }
 
 
+
 }
 
  ?>
@@ -44,76 +45,101 @@ if (isset($_SESSION['lastid'])) {
     <script src="https://kit.fontawesome.com/68830fe0e1.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="container move-down">
-      <h1>Procrastinator</h1>
 
-      <form id="addTodo" method="post">
+
+      <div class="container move-down">
+        <h1>Procrastinator</h1>
+
+        <form id="addTodo" method="post">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-floating mb-1 mt-3">
+                <input type="text" class="form-control" id="NewTodo" name="NewTodo"  placeholder="Task">
+                <label for="NewTodo">Enter New Task</label>
+              </div>
+              <div class="row">
+                <div class="col-lg-7 col-sm-12">
+                  <p class="text-muted">eg. Go grocery shopping</p>
+                </div>
+                <div class="col-lg-5">
+                  <div class="options mt-1">
+                    <button type="button" name="today" class="btn btn-outline-primary btn-option" id="today"><i class="fas fa-tasks"></i><span class="d-none d-lg-inline"> Today</span></button>
+                    <button type="button" name="general" class="btn btn-outline-secondary btn-option" id="general"><i class="fas fa-inbox"></i><span class="d-none d-lg-inline"> General</span></button>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="alert alert-warning alert-dismissible fade show alert-delete" role="alert">
+                    <strong>Holy guacamole!</strong> Task done.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 mt-4">
+              <button type="submit" name="submit" class="btn btn-lg btn-danger btn-submit" data-lastid="<?=$last_id ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Submit" disabled><i class="far fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </form>
         <div class="row">
           <div class="col-6">
-            <div class="form-floating mb-1 mt-3">
-              <input type="text" class="form-control" id="NewTodo" name="NewTodo"  placeholder="Task">
-              <label for="NewTodo">Enter New Task</label>
-            </div>
-            <div class="row">
-              <div class="col-lg-7 col-sm-12">
-                <p class="text-muted">eg. Go grocery shopping</p>
-              </div>
-              <div class="col-lg-5">
-                <div class="options mt-1">
-                  <button type="button" name="today" class="btn btn-outline-primary btn-option" id="today"><i class="fas fa-tasks"></i><span class="d-none d-lg-inline"> Today</span></button>
-                  <button type="button" name="general" class="btn btn-outline-secondary btn-option" id="general"><i class="fas fa-inbox"></i><span class="d-none d-lg-inline"> General</span></button>
-                </div>
-              </div>
+            <div class="todays-list mt-5">
+              <h3>Today's List</h3>
+              <?php foreach ($rows as $row): ?>
+                <?php if ($row['category'] === 'today'): ?>
+                  <div class="form-check" id="<?=$row['task_id'] ?>">
+                    <input class="form-check-input check" type="checkbox" data-id="<?=$row['task_id'] ?>" id="<?='check'.$row['task_id'] ?>">
+                    <label class="form-check-label" for="<?='check'.$row['task_id'] ?>"><?=$row['task'] ?></label>
+                  </div>
+                <?php endif; ?>
+              <?php endforeach; ?>
 
             </div>
+          </div>
 
+
+          <div class="col-6">
+            <div class="general-list">
+              <h3>General List</h3>
+              <?php foreach ($rows as $row): ?>
+                <?php if ($row['category'] === 'general'): ?>
+                  <div class="form-check" id="<?=$row['task_id'] ?>">
+                    <input class="form-check-input check" type="checkbox" data-id="<?=$row['task_id'] ?>" id="<?='check'.$row['task_id'] ?>">
+                    <label class="form-check-label" for="<?='check'.$row['task_id'] ?>"><?=$row['task'] ?></label>
+                  </div>
+                <?php endif; ?>
+              <?php endforeach; ?>
+            </div>
           </div>
-          <div class="col-4 mt-4">
-            <button type="submit" name="submit" class="btn btn-lg btn-danger btn-submit" data-lastid="<?=$last_id ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Submit" disabled><i class="far fa-paper-plane"></i></button>
-          </div>
+
         </div>
-      </form>
-      <div class="row">
-        <div class="col-6">
-          <div class="todays-list mt-5">
-            <h3>Today's List</h3>
-            <?php foreach ($rows as $row): ?>
-              <?php if ($row['category'] === 'today'): ?>
-                <div class="form-check" id="<?=$row['task_id'] ?>">
-                  <input class="form-check-input check" type="checkbox" data-id="<?=$row['task_id'] ?>" id="<?='check'.$row['task_id'] ?>">
-                  <label class="form-check-label" for="<?='check'.$row['task_id'] ?>"><?=$row['task'] ?></label>
+
+
+
+        <div class="projects col-8 mt-5">
+          <h3>Projects</h3>
+          <div class="mt-3">
+
+              <div class="row">
+                <div class="col-8">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4>e-commerce Website</h4>
+                    </div>
+                  </div>
                 </div>
-              <?php endif; ?>
-            <?php endforeach; ?>
 
+              </div>
           </div>
-        </div>
 
 
-        <div class="col-6">
-          <div class="general-list">
-            <h3>General List</h3>
-            <?php foreach ($rows as $row): ?>
-              <?php if ($row['category'] === 'general'): ?>
-                <div class="form-check" id="<?=$row['task_id'] ?>">
-                  <input class="form-check-input check" type="checkbox" data-id="<?=$row['task_id'] ?>" id="<?='check'.$row['task_id'] ?>">
-                  <label class="form-check-label" for="<?='check'.$row['task_id'] ?>"><?=$row['task'] ?></label>
-                </div>
-              <?php endif; ?>
-            <?php endforeach; ?>
-          </div>
-        </div>
-
-      </div>
-      <div class="row">
-        <div class="col-6 mt-5">
-          <div class="alert alert-warning alert-dismissible fade show alert-delete" role="alert">
-            <strong>Holy guacamole!</strong> Task done.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
         </div>
       </div>
 
-    </div>
+
+
+
   </body>
 </html>
